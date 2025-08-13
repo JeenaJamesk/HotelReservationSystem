@@ -22,7 +22,7 @@
     "autoprefixer": "^10.4.21",
     "next": "latest",
     "postcss": "^8.5.6",
-    "prisma": "^3.0.0",
+    // "prisma": "^3.0.0",
     "react": "latest",
     "react-dom": "latest",
     "react-icons": "^5.5.0",
