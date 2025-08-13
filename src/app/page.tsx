@@ -9,8 +9,14 @@ import AboutPage from './about/page';
 import MenuPage from './menu/page';
 import GallaeryPage from './gallery/page';
 import ContactPage from './contact/page';
+import LaunchingSoon from '../components/LaunchingSoon';
 
 export default function HomePage() {
+  const live = process.env.NEXT_PUBLIC_LIVE === 'true';
+  if (!live) {
+    return <LaunchingSoon />;
+  }
+
   const images = [
     "/images/bg1.jpeg",
     "/images/bg2.jpeg",
@@ -58,4 +64,4 @@ export default function HomePage() {
       {/* <Footer /> */}
     </section>
   );
-};
+}
