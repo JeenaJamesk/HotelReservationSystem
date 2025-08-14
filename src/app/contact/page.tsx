@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaPhoneAlt, FaInstagram, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaPhone, FaInstagram, FaMapMarkerAlt } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 
 const ContactPage = () => {
@@ -31,11 +31,11 @@ const ContactPage = () => {
                 </div>
                 <div className="flex gap-2 items-center justify-center my-[10px]">
                     <div className="flex items-center">
-                        <FaPhoneAlt className="text-blue-500 mr-[5px]" />
+                        <FaPhone className="text-blue-500 mr-[5px]" />
                         <span className="mr-[10px] text-lg font-semibold">+441234567890</span>
                     </div>
                     <div className="flex items-center">
-                        <FaPhoneAlt className="text-blue-500 mr-[5px]" />
+                        <FaPhone className="text-blue-500 mr-[5px]" />
                         <span className="text-lg font-semibold">+01332974086</span>
                     </div>
                     </div>

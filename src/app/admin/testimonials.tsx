@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import TestimonialCard from '../../components/TestimonialCard';
+import TestimonialCard, { Testimonial } from '../../components/TestimonialCard';
 
 const Testimonials = () => {
-    const [testimonials, setTestimonials] = useState([]);
+    const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
 
     useEffect(() => {
         const fetchTestimonials = async () => {
@@ -14,7 +14,7 @@ const Testimonials = () => {
         fetchTestimonials();
     }, []);
 
-    const approveTestimonial = async (id) => {
+    const approveTestimonial = async (id: string) => {
         await fetch(`/api/testimonials/${id}/approve`, {
             method: 'POST',
         });

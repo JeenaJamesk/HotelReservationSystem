@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+// import { prisma } from '@/lib/prisma';
 
 export async function POST(request: Request) {
     const { name, email, date, time, guests } = await request.json();
@@ -9,16 +9,17 @@ export async function POST(request: Request) {
     }
 
     try {
-        const reservation = await prisma.reservation.create({
-            data: {
-                name,
-                email,
-                date,
-                time,
-                guests,
-            },
-        });
-        return NextResponse.json(reservation, { status: 201 });
+    // const reservation = await prisma.reservation.create({
+    //     data: {
+    //         name,
+    //         email,
+    //         date,
+    //         time,
+    //         guests,
+    //     },
+    // });
+    // return NextResponse.json(reservation, { status: 201 });
+    return NextResponse.json({ message: 'Prisma temporarily disabled.' }, { status: 201 });
     } catch (error) {
         return NextResponse.json({ error: 'Failed to create reservation' }, { status: 500 });
     }
