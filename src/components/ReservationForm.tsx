@@ -8,7 +8,7 @@ const ReservationForm = () => {
     const [guests, setGuests] = useState(1);
     const [specialRequests, setSpecialRequests] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // Handle form submission logic here
         console.log({
@@ -70,7 +70,7 @@ const ReservationForm = () => {
                     type="number"
                     id="guests"
                     value={guests}
-                    onChange={(e) => setGuests(e.target.value)}
+                    onChange={(e) => setGuests(Number(e.target.value))}
                     min="1"
                     required
                 />

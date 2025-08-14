@@ -1,6 +1,6 @@
 import React from 'react';
-import { FaPhone, FaInstagram, FaMapMarkerAlt } from 'react-icons/fa';
-import { MdEmail } from 'react-icons/md';
+// import { FaPhone, FaInstagram, FaMapMarkerAlt } from 'react-icons/fa';
+// import { MdEmail } from 'react-icons/md';
 
 const ContactPage = () => {
     return (
@@ -30,17 +30,17 @@ const ContactPage = () => {
                     <img src="/images/location.png" alt="Contact Us" className="mt-[6px] w-full h-auto rounded-lg shadow-lg" />
                 </div>
                 <div className="flex gap-2 items-center justify-center my-[10px]">
-                    <div className="flex items-center">
+                    {/* <div className="flex items-center">
                         <FaPhone className="text-blue-500 mr-[5px]" />
                         <span className="mr-[10px] text-lg font-semibold">+441234567890</span>
                     </div>
                     <div className="flex items-center">
                         <FaPhone className="text-blue-500 mr-[5px]" />
                         <span className="text-lg font-semibold">+01332974086</span>
-                    </div>
+                    </div> */}
                     </div>
                     <div  className="flex gap-2 items-center justify-center my-[10px] gap-[10px] ">
-                    <div className="flex items-center">
+                    {/* <div className="flex items-center">
                         <FaInstagram className="text-pink-500 [5px]" />
                         <span className="text-lg font-semibold">aalappeaz.uk</span>
                     </div>
@@ -51,7 +51,7 @@ const ContactPage = () => {
                     <div className="flex items-center">
                         <FaMapMarkerAlt className="text-green-600 [5px]" />
                         <span className="text-lg font-semibold">16 St Peters Churchyard, Derby, DE1 1NN</span>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

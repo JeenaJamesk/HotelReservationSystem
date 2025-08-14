@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { FaInstagram } from "react-icons/fa";
+// import { FaInstagram } from "react-icons/fa";
 
 export default function Navbar() {
  
@@ -32,7 +32,7 @@ export default function Navbar() {
                 rel="noopener noreferrer"
                 className="text-white hover:text-pink-500 transition-colors text-xl"
               >
-                <FaInstagram />
+                {/* <FaInstagram /> */}
               </a>
             </div>
           </div>

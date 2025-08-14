@@ -6,7 +6,7 @@ const AdminLogin = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
-    const handleLogin = (e) => {
+    const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // Implement your authentication logic here
         if (password === process.env.ADMIN_PASS) {
