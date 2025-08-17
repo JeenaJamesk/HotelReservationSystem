@@ -1,32 +1,27 @@
-model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  password  String
-  reservations Reservation[]
-  testimonials Testimonial[]
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+}
+
+model AdminCredential {
+  id         Int       @id @default(autoincrement())
+  created_at DateTime  @default(now())
+  username   String    @default("")
+  password   String?
 }
 
 model Reservation {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  date      DateTime
-  time      String
-  guests    Int
-  user      User     @relation(fields: [userId], references: [id])
-}
-
-model Testimonial {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  content   String
-  user      User     @relation(fields: [userId], references: [id])
-}
-
-model MenuItem {
-  id        Int      @id @default(autoincrement())
-  name      String
-  description String
-  price     Float
-  imageUrl  String
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  name       String?
+  email      String?
+  phone      BigInt?
+  nofguest   Int?
+  comment    String?  @default("")
+  date       DateTime?
+  time       String?
 }
