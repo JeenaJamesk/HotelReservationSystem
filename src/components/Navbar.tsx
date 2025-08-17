@@ -1,41 +1,74 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-// import { FaInstagram } from "react-icons/fa";
 
 export default function Navbar() {
- 
-      return (
-        <nav className="w-full px-8 py-4 bg-black bg-opacity-40 text-white z-50 absolute top-0 left-0">
-          <div className="flex justify-between items-center w-full">
-            <Link href="/" className="flex items-center gap-2">
-              <Image
-                src="/images/logo-white.png"
-                alt="AALAPPEAZ Logo"
-                width={50}
-                height={50}
-                priority
-              />
-            </Link>
-            <div className="flex items-center gap-4">
-              <Link
-                href="/book-table"
-                className="bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 rounded-full font-semibold transition-all"
-              >
-                Book Table
-              </Link>
-              <a
-                href="https://instagram.com/yourusername"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white hover:text-pink-500 transition-colors text-xl"
-              >
-                {/* <FaInstagram /> */}
-              </a>
-            </div>
-          </div>
-        </nav>
-      );
-    }
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // 80px is the height of the hero/main section's navbar area
+      setScrolled(window.scrollY > window.innerHeight - 80);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <nav
+      className={`w-full px-8 py-4 z-50 fixed top-0 left-0 transition-colors duration-300 ${scrolled ? 'text-black shadow-md' : 'text-white'}}`}
+      style={{ backgroundColor: scrolled ? '#fff' : 'rgba(0,0,0,0.4)' }}
+    >
+      <div className="flex justify-between items-center w-full">
+        <Link href="/" className="flex items-center gap-2">
+          <Image
+            src="/images/logo-white.png"
+            alt="AALAPPEAZ Logo"
+            width={50}
+            height={50}
+            priority
+          />
+        </Link>
+        <div className="flex items-center">
+          <Link
+            href="/booking"
+            className="bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 rounded-full font-semibold transition-all mr-[10px]"
+            style={{ color: scrolled ? '#000' : '#fff' }}
+          >
+            Book Table
+          </Link>
+          <a
+            href="#about-section"
+            className="bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 rounded-full font-semibold transition-all mr-[10px] cursor-pointer"
+            style={{ color: scrolled ? '#000' : '#fff' }}
+          >
+            About us
+          </a>
+          <a
+            href="#menu-section"
+            className="bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 rounded-full font-semibold transition-all mr-[10px] cursor-pointer"
+            style={{ color: scrolled ? '#000' : '#fff' }}
+          >
+            Menu
+          </a>
+          <a
+            href="#gallery-section"
+            className="bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 rounded-full font-semibold transition-all mr-[10px] cursor-pointer"
+            style={{ color: scrolled ? '#000' : '#fff' }}
+          >
+            Gallery
+          </a>
+          <a
+            href="#contact-section"
+            className="bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 rounded-full font-semibold transition-all mr-[10px] cursor-pointer"
+            style={{ color: scrolled ? '#000' : '#fff' }}
+          >
+            Contact us
+          </a>
+        </div>
+      </div>
+    </nav>
+  );
+}

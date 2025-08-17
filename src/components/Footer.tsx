@@ -1,14 +1,22 @@
 import React from 'react';
+import { FaInstagram } from "react-icons/fa";
 
 const Footer = () => {
     return (
-        <footer className="bg-gray-800 text-white py-4">
-            <div className="container mx-auto text-center">
-                <p>&copy; {new Date().getFullYear()} Hotel Reservation System. All rights reserved.</p>
-                <p>
-                    <a href="/privacy-policy" className="text-gray-400 hover:text-white">Privacy Policy</a> | 
-                    <a href="/terms-of-service" className="text-gray-400 hover:text-white"> Terms of Service</a>
-                </p>
+        <footer className="bg-gray-800 text-white py-4 text-[#aaa7a7]">
+            <div className="flex mx-auto justify-between mr-[1%] ml-[1%]">
+                <div><p>&copy; {new Date().getFullYear()} AALAPPEAZ. All rights reserved.</p></div>
+                <div><p>Stay in Touch { }
+                    <a
+                        href="https://instagram.com/yourusername"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-white hover:text-pink-500 transition-colors text-xl"
+                    >
+                        <FaInstagram />
+                    </a>
+                </p></div>
+               
             </div>
         </footer>
     );
