@@ -47,7 +47,7 @@ export default function BookingPage() {
 						<hr className="w-full border-t border-black mb-2" style={{ height: '1px' }} />
 						<h3 className="text-2xl font-extrabold text-center text-[#000] tracking-wide">Make a Booking</h3>
 						<hr className="w-full border-t border-black mt-2" style={{ height: '1px' }} />
-						<h1 className="text-2xl font-extrabold text-center text-[#000] tracking-wide">Book a Table</h1>
+							<h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-center text-yellow-700">Book a Table</h1>
 					</div>
 					<form className="space-y-6 grid gap-[2%]" onSubmit={handleSubmit}>
 						<div>

@@ -16,74 +16,67 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit, onClose }) => {
     email: "",
     message: "",
   });
+  const [error, setError] = useState<string>("");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-  setFormData((prev: ContactFormData) => ({ ...prev, [name]: value }));
+    setFormData((prev: ContactFormData) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      setError("All fields are required.");
+      return;
+    }
+    setError("");
     onSubmit(formData);
   };
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-4 grid gap-[10px]">
-      <div>
-        <input
-          type="text"
-          name="name"
-          id="contact-name"
-          value={formData.name}
-          onChange={handleChange}
-          className="w-full border-0 border-b-2 border-gray-300 px-3 py-2 bg-transparent text-white placeholder-gray-400 focus:outline-none focus:border-blue-400"
-          placeholder="Name"
-          required
-        />
-      </div>
-      <div>
-        <input
-          type="email"
-          name="email"
-          id="contact-email"
-          value={formData.email}
-          onChange={handleChange}
-          className="w-full border-0 border-b-2 border-gray-300 px-3 py-2 bg-transparent text-white placeholder-gray-400 focus:outline-none focus:border-blue-400"
-          placeholder="Email"
-          required
-        />
-      </div>
-      <div>
-        <textarea
-          name="message"
-          id="contact-message"
-          value={formData.message}
-          onChange={handleChange}
-          rows={4}
-          className="w-full border-0 border-b-2 border-gray-300 px-3 py-2 bg-transparent text-white placeholder-gray-400 focus:outline-none focus:border-blue-400 resize-none"
-          placeholder="Message"
-          required
-        />
-      </div>
-      <div className="flex items-center justify-center gap-4 mt-4 mx-[5px]">
+    return (
+      <form className="space-y-4 sm:space-y-6 px-2 sm:px-0" onSubmit={handleSubmit}>
+        <div>
+          <input
+            type="text"
+            name="name"
+            className="w-full border-0 border-b-2 border-gray-300 bg-transparent text-[#00363a] placeholder-gray-400 focus:outline-none focus:border-blue-400 p-1 sm:p-2"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="Name"
+          />
+        </div>
+        <div>
+          <input
+            type="email"
+            name="email"
+            className="w-full border-0 border-b-2 border-gray-300 p-1 sm:p-2 bg-transparent text-[#00363a] placeholder-gray-400 focus:outline-none focus:border-blue-400"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Email"
+          />
+        </div>
+        <div>
+          <textarea
+            name="message"
+            id="contact-message"
+            value={formData.message}
+            onChange={handleChange}
+            rows={4}
+            className="w-full border-0 border-b-2 border-gray-300 p-1 sm:p-2 bg-transparent text-[#00363a] placeholder-gray-400 focus:outline-none focus:border-blue-400 resize-none"
+            placeholder="Message"
+            required
+          />
+        </div>
+        {error && <div className="text-red-400 text-sm mt-1 text-center">{error}</div>}
         <button
           type="submit"
-          className="bg-blue-500 text-white font-bold px-6 py-2 rounded hover:bg-blue-600 transition mr-[5px]"
+          className="bg-blue-500 text-white font-bold py-1 sm:py-2 px-4 sm:px-6 rounded hover:bg-blue-600 transition mx-auto block"
         >
-          Submit
+          Send Message
         </button>
-        <button
-          type="button"
-          onClick={onClose}
-          className="bg-red-500 text-white font-bold px-6 py-2 rounded hover:bg-red-600 transition mr-[5px]"
-        >
-          Close
-        </button>
-      </div>
-    </form>
-  );
+      </form>
+    );
 };
 
 export default ContactForm;

@@ -68,7 +68,7 @@ const ContactPage = () => {
           </div>
         </div>
 
-        <div className="flex items-center justify-evenly mb-[2%]">
+        <div className="flex items-center justify-evenly mb-[2%] sm:flex-col">
           <div className="flex items-center">
             <FaInstagram className="text-pink-500 mr-[2px]" />
             <span className="text-lg font-semibold">aalappeaz.uk</span>
