@@ -10,26 +10,13 @@ import GallaeryPage from './gallery/page';
 import ContactPage from './contact/page';
 import LaunchingSoon from '../components/LaunchingSoon';
 import Footer from '../components/Footer';
-import { PrismaClient } from '@prisma/client';
+// import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 export default function HomePage() {
   const [adminCredentials, setAdminCredentials] = useState<any[]>([]);
-
-  useEffect(() => {
-    async function fetchAdminCredentials() {
-      const credentials = await prisma.adminCredential.findMany();
-      setAdminCredentials(credentials);
-      console.log(credentials);
-    }
-    fetchAdminCredentials();
-  }, []);
-
-  const live = process.env.NEXT_PUBLIC_LIVE === 'true';
-  if (!live) {
-    return <LaunchingSoon />;
-  }
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const images = [
     "/images/bg1.jpeg",
@@ -37,7 +24,16 @@ export default function HomePage() {
     "/images/bg3.jpeg",
   ];
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  useEffect(() => {
+    async function fetchAdminCredentials() {
+      // Temporarily disable Prisma for build
+      // const credentials = await prisma.adminCredential.findMany();
+      // setAdminCredentials(credentials);
+      // console.log(credentials);
+      setAdminCredentials([]);
+    }
+    fetchAdminCredentials();
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -48,6 +44,11 @@ export default function HomePage() {
 
     return () => clearInterval(interval);
   }, [images.length]);
+
+  const live = process.env.NEXT_PUBLIC_LIVE === 'true';
+  if (!live) {
+    return <LaunchingSoon />;
+  }
 
   return (
     <>
