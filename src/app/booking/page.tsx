@@ -1,7 +1,9 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function BookingPage() {
+	const router = useRouter();
 	const [name, setName] = useState("");
 	const [phone, setPhone] = useState("");
 	const [email, setEmail] = useState("");
@@ -26,15 +28,35 @@ export default function BookingPage() {
 		return errs;
 	}
 
-	function handleSubmit(e: React.FormEvent) {
-		e.preventDefault();
-		const errs = validate();
-		setErrors(errs);
-		if (Object.keys(errs).length === 0) {
-			// Submit logic here
-			alert("Booking submitted!");
+		async function handleSubmit(e: React.FormEvent) {
+			e.preventDefault();
+			const errs = validate();
+			setErrors(errs);
+			if (Object.keys(errs).length === 0) {
+				try {
+					const res = await fetch("/api/book-table", {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify({
+							name,
+							phone,
+							email,
+							guests,
+							date,
+							time,
+						}),
+					});
+					if (res.ok) {
+						router.push("/");
+					} else {
+						const data = await res.json();
+						setErrors({ api: data.error || "Booking failed. Please try again." });
+					}
+				} catch (err) {
+					setErrors({ api: "Booking failed. Please try again." });
+				}
+			}
 		}
-	}
 
 	return (
 		<div className="flex items-center bg-[#000] p-[2%] min-h-[98vh]">
@@ -49,7 +71,8 @@ export default function BookingPage() {
 						<hr className="w-full border-t border-black mt-2" style={{ height: '1px' }} />
 							<h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-center text-yellow-700">Book a Table</h1>
 					</div>
-					<form className="space-y-6 grid gap-[2%]" onSubmit={handleSubmit}>
+								<form className="space-y-6 grid gap-[2%]" onSubmit={handleSubmit}>
+									{errors.api && <div className="text-red-400 text-sm mb-2">{errors.api}</div>}
 						<div>
 							<input
 								type="text"
