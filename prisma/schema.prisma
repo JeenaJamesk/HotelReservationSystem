@@ -12,6 +12,7 @@ model AdminCredential {
   created_at DateTime  @default(now())
   username   String    @default("")
   password   String?
+  @@map("admin_credentials")
 }
 
 model Reservation {
@@ -24,4 +25,5 @@ model Reservation {
   comment    String?  @default("")
   date       DateTime?
   time       String?
+  @@map("reservation")
 }
