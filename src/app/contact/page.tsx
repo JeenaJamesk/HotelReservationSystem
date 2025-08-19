@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { FaPhoneAlt, FaInstagram, FaMapMarkerAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";

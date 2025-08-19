@@ -10,18 +10,18 @@ import GallaeryPage from './gallery/page';
 import ContactPage from './contact/page';
 import LaunchingSoon from '../components/LaunchingSoon';
 import Footer from '../components/Footer';
-import { PrismaClient } from '@prisma/client';
+// import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 export default function HomePage() {
   const [adminCredentials, setAdminCredentials] = useState<any[]>([]);
 
   useEffect(() => {
     async function fetchAdminCredentials() {
-      const credentials = await prisma.adminCredential.findMany();
-      setAdminCredentials(credentials);
-      console.log(credentials);
+      // const credentials = await prisma.adminCredential.findMany();
+      // setAdminCredentials(credentials);
+      // console.log(credentials);
     }
     fetchAdminCredentials();
   }, []);
