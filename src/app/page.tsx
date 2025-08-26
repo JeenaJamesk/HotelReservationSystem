@@ -10,7 +10,6 @@ import GallaeryPage from './gallery/page';
 import ContactPage from './contact/page';
 import LaunchingSoon from '../components/LaunchingSoon';
 import Footer from '../components/Footer';
-// import { PrismaClient } from '@prisma/client';
 
 // const prisma = new PrismaClient();
 
@@ -26,15 +25,18 @@ export default function HomePage() {
     fetchAdminCredentials();
   }, []);
 
-  const live = process.env.NEXT_PUBLIC_LIVE === 'true';
+  const live = process.env.NEXT_PUBLIC_LIVE === 'false';
   if (!live) {
     return <LaunchingSoon />;
   }
 
   const images = [
-    "/images/bg1.jpeg",
-    "/images/bg2.jpeg",
-    "/images/bg3.jpeg",
+    "/images/bg1.JPG",
+    "/images/bg2.JPG",
+    "/images/bg3.JPG",
+    "/images/bg4.JPG",
+    "/images/bg5.JPG",
+    "/images/bg6.JPG",
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -64,14 +66,17 @@ export default function HomePage() {
             <p className="text-base sm:text-lg md:text-xl">With the soulful flavours of coastal Kerala,
               Aalappeaz is more than just a meal,
               it is a journey to the heart of the backwaters.</p>
+
+            <a
+              href="/booking"
+              className="inline-block mt-6 p-[3px] z-[10] text-black font-bold text-lg shadow-lg hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all pointer-events-auto no-underline rounded-lg hover:no-underline fixed left-1/2 -translate-x-1/2 bottom-0 w-auto max-w-[90vw]"
+              style={{ opacity: 1, visibility: 'visible', backgroundColor: 'white', padding: '5px 10px' }}
+              onMouseEnter={e => (e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.4)')}
+              onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'white')}
+            >
+              BOOK
+            </a>
           </div>
-          <a
-            href="/booking"
-            className="fixed left-1/2 top-1/2 z-[10] p-2 sm:p-4 md:p-6 lg:p-8 text-black font-bold text-lg shadow-lg hover:scale-105 hover:bg-transparent focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all pointer-events-auto no-underline -translate-x-1/2 -translate-y-1/2 rounded-lg"
-            style={{ opacity: 1, visibility: 'visible', backgroundColor: 'white' }}
-          >
-            BOOK
-          </a>
         </main>
         <div id="about-section" className="w-full px-2 sm:px-4 md:px-8 lg:px-16">
           <AboutPage />

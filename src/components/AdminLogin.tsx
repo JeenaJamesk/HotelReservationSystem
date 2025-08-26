@@ -24,7 +24,7 @@ const AdminLogin = () => {
             if (data.success) {
                 setSuccess(true);
                 setTimeout(() => {
-                    window.location.href = '/admin';
+                    window.location.href = '/admin/dashboard';
                 }, 1200);
             } else {
                 setError(data.error || 'Login failed');

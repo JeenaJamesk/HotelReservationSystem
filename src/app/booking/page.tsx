@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Toaster from "../../components/Toaster";
 
 export default function BookingPage() {
 	const router = useRouter();
@@ -12,6 +13,7 @@ export default function BookingPage() {
 	const [time, setTime] = useState("");
 	const [message, setMessage] = useState("");
 	const [errors, setErrors] = useState<{ [key: string]: string }>({});
+	const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
 
 	const times = [
 		"12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM",
@@ -28,138 +30,157 @@ export default function BookingPage() {
 		return errs;
 	}
 
-		async function handleSubmit(e: React.FormEvent) {
-			e.preventDefault();
-			const errs = validate();
-			setErrors(errs);
-			if (Object.keys(errs).length === 0) {
-				try {
-					const res = await fetch("/api/book-table", {
-						method: "POST",
-						headers: { "Content-Type": "application/json" },
-						body: JSON.stringify({
-							name,
-							phone,
-							email,
-							guests,
-							date,
-							time,
-						}),
-					});
-					if (res.ok) {
-						router.push("/");
-					} else {
-						const data = await res.json();
-						setErrors({ api: data.error || "Booking failed. Please try again." });
-					}
-				} catch (err) {
-					setErrors({ api: "Booking failed. Please try again." });
+	async function handleSubmit(e: React.FormEvent) {
+		e.preventDefault();
+		const errs = validate();
+		setErrors(errs);
+		if (Object.keys(errs).length === 0) {
+			try {
+				const res = await fetch("/api/book-table", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
+						name,
+						phone,
+						email,
+						guests,
+						date,
+						time,
+						message
+					}),
+				});
+				if (res.ok) {
+					router.back();
+				} else {
+					const data = await res.json();
+					setToast({ message: data.error || "Booking failed. Please try again.", type: "error" });
 				}
+			} catch (err) {
+				setToast({ message: "Booking failed. Please try again.", type: "error" });
 			}
 		}
+	}
 
 	return (
-		<div className="flex items-center bg-[#000] p-[2%] min-h-[98vh]">
-			<div className="grid bg-white rounded-lg shadow-2xl border-[#00b6bd] grid-cols-[1fr_2fr]" style={{ backgroundColor: "#fff" }}>
-				<div className="md:w-1/2 w-full flex items-center justify-center p-[2%] p-6 min-h-[90vh]">
-					<img src="/images/resturant.png" alt="Restaurant" className="rounded-[5px] w-full h-[97%] object-cover" />
-				</div>
-				<div className="w-[95%] mx-auto p-8 flex flex-col justify-center">
-					<div className="flex flex-col items-center mb-6 ">
-						<hr className="w-full border-t border-black mb-2" style={{ height: '1px' }} />
-						<h3 className="text-2xl font-extrabold text-center text-[#000] tracking-wide">Make a Booking</h3>
-						<hr className="w-full border-t border-black mt-2" style={{ height: '1px' }} />
-							<h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-center text-yellow-700">Book a Table</h1>
+		<>
+			{toast && (
+				<Toaster
+					message={toast.message}
+					type={toast.type}
+					onClose={() => setToast(null)}
+				/>
+			)}
+			<div className="flex items-center bg-[#000] p-[2%] min-h-[98vh]">
+				<div className="grid bg-white rounded-lg shadow-2xl border-[#00b6bd] grid-cols-[1.5fr_2fr]" style={{ backgroundColor: "#fff" }}>
+					<div className="md:w-1/2 w-full flex items-center justify-center p-[2%] p-6 min-h-[90vh]">
+						<img src="/images/resturant.png" alt="Restaurant" className="rounded-[5px] w-full h-[97%] object-cover" />
 					</div>
-								<form className="space-y-6 grid gap-[2%]" onSubmit={handleSubmit}>
-									{errors.api && <div className="text-red-400 text-sm mb-2">{errors.api}</div>}
-						<div>
-							<input
-								type="text"
-								className="w-full border-0 border-b-2 border-gray-300 bg-transparent text-[#00363a] placeholder-gray-400 focus:outline-none focus:border-blue-400 p-[1%]"
-								value={name}
-								onChange={e => setName(e.target.value)}
-								placeholder="Name"
-							/>
-							{errors.name && <div className="text-red-400 text-sm mt-1">{errors.name}</div>}
+					<div className="w-[95%] mx-auto p-8 flex flex-col justify-center">
+						<div className="flex flex-col items-center mb-6 ">
+							<hr className="w-full border-t border-black mb-2" style={{ height: '1px' }} />
+							<h3 className="text-2xl font-extrabold text-center text-[#000] tracking-wide">Make a Booking</h3>
+							<hr className="w-full border-t border-black mt-2" style={{ height: '1px' }} />
+							<h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-center text-yellow-700">Book a Table</h1>
 						</div>
-						<div>
-							<input
-								type="tel"
-								className="w-full border-0 border-b-2 border-gray-300 p-[1%] bg-transparent text-[#00363a] placeholder-gray-400 focus:outline-none focus:border-blue-400"
-								value={phone}
-								onChange={e => setPhone(e.target.value)}
-								pattern="\d{10,15}"
-								placeholder="Phone Number"
-							/>
-							{errors.phone && <div className="text-red-400 text-sm mt-1">{errors.phone}</div>}
-						</div>
-						<div>
-							<input
-								type="email"
-								className="w-full border-0 border-b-2 border-gray-300 p-[1%] bg-transparent text-[#00363a] placeholder-gray-400 focus:outline-none focus:border-blue-400"
-								value={email}
-								onChange={e => setEmail(e.target.value)}
-								placeholder="Email"
-							/>
-							{errors.email && <div className="text-red-400 text-sm mt-1">{errors.email}</div>}
-						</div>
-						<div>
-							<select
-								className="w-full border-0 border-b-2 border-gray-300 p-[1%] bg-transparent text-[#00363a] focus:outline-none focus:border-blue-400"
-								value={guests}
-								onChange={e => setGuests(Number(e.target.value))}
-							>
-								<option value="" disabled>Number of Guests</option>
-								{[...Array(10)].map((_, i) => (
-									<option key={i + 1} value={i + 1}>{i + 1}</option>
-								))}
-							</select>
-						</div>
-						<div className="relative">
-							<input
-								type="date"
-								className="w-full border-0 border-b-2 border-gray-300 p-[1%] bg-transparent text-[#00363a] focus:outline-none focus:border-blue-400"
-								value={date}
-								onChange={e => setDate(e.target.value)}
-								min={new Date().toISOString().split("T")[0]}
-							/>
-							{errors.date && <div className="text-red-400 text-sm mt-1">{errors.date}</div>}
-						</div>
-						<div>
-							<select
-								className="w-full border-0 border-b-2 border-gray-300 p-[1%] bg-transparent text-[#00363a] focus:outline-none focus:border-blue-400"
-								value={time}
-								onChange={e => setTime(e.target.value)}
-							>
-								<option value="" disabled>Select Time</option>
-								{times.map(t => (
-									<option key={t} value={t}>{t}</option>
-								))}
-							</select>
-							{errors.time && <div className="text-red-400 text-sm mt-1">{errors.time}</div>}
-						</div>
-						<div>
-							<textarea
-								name="message"
-								id="contact-message"
-								value={message}
-								onChange={e => setMessage(e.target.value)}
-								rows={4}
-								className="w-full border-0 border-b-2 border-gray-300 p-[1%] bg-transparent text-white placeholder-gray-400 focus:outline-none focus:border-blue-400 resize-none"
-								placeholder="Message"
-								required
-							/>
-						</div>
-						<button
-							type="submit"
-							className="bg-blue-500 text-white font-bold p-[1%] rounded hover:bg-blue-600 transition size-max m-auto"
-						>
-							Book Now
-						</button>
-					</form>
+						<form className="space-y-6 grid gap-[2%]" onSubmit={handleSubmit}>
+							{errors.api && <div className="text-red-400 text-sm mb-2">{errors.api}</div>}
+							<div>
+								<input
+									type="text"
+									className="w-full border-0 border-b-2 border-gray-300 bg-transparent text-[#00363a] placeholder-gray-400 focus:outline-none focus:border-blue-400 p-[1%]"
+									value={name}
+									onChange={e => setName(e.target.value)}
+									placeholder="Name"
+								/>
+								{errors.name && <div className="text-red-400 text-sm mt-1">{errors.name}</div>}
+							</div>
+							<div>
+								<input
+									type="tel"
+									className="w-full border-0 border-b-2 border-gray-300 p-[1%] bg-transparent text-[#00363a] placeholder-gray-400 focus:outline-none focus:border-blue-400"
+									value={phone}
+									onChange={e => setPhone(e.target.value)}
+									pattern="\d{10,15}"
+									placeholder="Phone Number"
+								/>
+								{errors.phone && <div className="text-red-400 text-sm mt-1">{errors.phone}</div>}
+							</div>
+							<div>
+								<input
+									type="email"
+									className="w-full border-0 border-b-2 border-gray-300 p-[1%] bg-transparent text-[#00363a] placeholder-gray-400 focus:outline-none focus:border-blue-400"
+									value={email}
+									onChange={e => setEmail(e.target.value)}
+									placeholder="Email"
+								/>
+								{errors.email && <div className="text-red-400 text-sm mt-1">{errors.email}</div>}
+							</div>
+							<div>
+								<select
+									className="w-full border-0 border-b-2 border-gray-300 p-[1%] bg-transparent text-[#00363a] focus:outline-none focus:border-blue-400"
+									value={guests}
+									onChange={e => setGuests(Number(e.target.value))}
+								>
+									<option value="" disabled>Number of Guests</option>
+									{[...Array(10)].map((_, i) => (
+										<option key={i + 1} value={i + 1}>{i + 1}</option>
+									))}
+								</select>
+							</div>
+							<div className="relative">
+								   <input
+									   type="date"
+									   className="w-full border-0 border-b-2 border-gray-300 p-[1%] bg-transparent text-[#00363a] focus:outline-none focus:border-blue-400"
+									   value={date}
+									   onChange={e => setDate(e.target.value)}
+									   min={new Date().toISOString().split("T")[0]}
+									   onClick={e => e.currentTarget.showPicker && e.currentTarget.showPicker()}
+								   />
+								{errors.date && <div className="text-red-400 text-sm mt-1">{errors.date}</div>}
+							</div>
+							<div>
+								<select
+									className="w-full border-0 border-b-2 border-gray-300 p-[1%] bg-transparent text-[#00363a] focus:outline-none focus:border-blue-400"
+									value={time}
+									onChange={e => setTime(e.target.value)}
+								>
+									<option value="" disabled>Select Time</option>
+									{times.map(t => (
+										<option key={t} value={t}>{t}</option>
+									))}
+								</select>
+								{errors.time && <div className="text-red-400 text-sm mt-1">{errors.time}</div>}
+							</div>
+							<div>
+								<textarea
+									name="message"
+									id="contact-message"
+									value={message}
+									onChange={e => setMessage(e.target.value)}
+									rows={4}
+									className="w-full border-0 border-b-2 border-gray-300 p-[1%] bg-transparent text-white placeholder-gray-400 focus:outline-none focus:border-blue-400 resize-none"
+									placeholder="Message"
+								/>
+							</div>
+							<div className="flex justify-center">
+								<button
+									type="button"
+									className="bg-gray-400 min-w-[100px] mr-[5px] text-white font-bold p-[1%] rounded hover:bg-gray-600 transition size-max"
+									onClick={() => router.back()}
+								>
+									Cancel
+								</button>
+								<button
+									type="submit"
+									className="bg-blue-500 min-w-[100px] ml-[5px]text-white font-bold p-[1%] rounded hover:bg-blue-600 transition size-max"
+								>
+									Book Now
+								</button>
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 }

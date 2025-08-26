@@ -16,7 +16,7 @@
 }
 
 body {
-    font-family: 'Inter', sans-serif; /* Example font family */
+    font-family: 'Clarkson', Helvetica, sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
     line-height: 1.6;

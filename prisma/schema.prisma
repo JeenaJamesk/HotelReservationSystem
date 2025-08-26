@@ -25,5 +25,6 @@ model Reservation {
   comment    String?  @default("")
   date       DateTime?
   time       String?
+  status       String?
   @@map("reservation")
 }
